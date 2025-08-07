@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Phone Store</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom styles for the price range slider thumb */
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #4f46e5;
+            cursor: pointer;
+            border-radius: 50%;
+            margin-top: -8px; /* Align thumb with track */
+        }
+        input[type=range]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            background: #4f46e5;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+        .loader {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #4f46e5;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 2rem auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        /* Modal styles */
+        .modal-overlay {
+            transition: opacity 0.3s ease;
+        }
+        .modal-container {
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+        /* Compare checkbox on product card */
+        .product-card .compare-checkbox-wrapper {
+            opacity: 0;
+            transition: opacity 0.2s ease-in-out;
+        }
+        .product-card:hover .compare-checkbox-wrapper {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <!-- Filters Sidebar (Off-canvas) -->
+    <aside id="filters-sidebar" class="fixed top-0 left-0 z-50 w-80 h-screen p-6 overflow-y-auto transition-transform duration-300 transform -translate-x-full bg-white shadow-lg">
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-2xl font-semibold">Filters</h2>
+            <button id="close-sidebar-btn" class="p-2 rounded-full hover:bg-gray-200">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+        </div>
+        <div class="mb-6">
+            <h3 class="text-lg font-medium mb-3">Brand</h3>
+            <div id="brand-filters" class="space-y-2 max-h-60 overflow-y-auto"></div>
+        </div>
+        <div class="mb-6">
+            <h3 class="text-lg font-medium mb-3">Network Type</h3>
+            <div id="network-filters" class="space-y-2"></div>
+        </div>
+        <div>
+            <h3 class="text-lg font-medium mb-3">Price Range</h3>
+            <input type="range" id="price-filter" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer" min="0" max="2000" value="2000">
+            <div class="flex justify-between text-sm text-gray-600 mt-2">
+                <span>$0</span>
+                <span id="price-value">$2000</span>
+            </div>
+        </div>
+    </aside>
+    <div id="sidebar-overlay" class="fixed inset-0 z-40 bg-black bg-opacity-50 hidden"></div>
+
+
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <header class="flex justify-between items-center mb-10">
+            <div class="text-left">
+                 <h1 class="text-4xl lg:text-5xl font-bold text-gray-800">Mobile Store</h1>
+                 <p class="text-gray-600 mt-2">Find your next phone.</p>
+            </div>
+            <!-- Wishlist and Cart buttons -->
+            <div class="flex items-center gap-4">
+                <button id="wishlist-btn" class="relative p-2 text-gray-600 hover:text-indigo-600 focus:outline-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 016.364 0L12 7.636l1.318-1.318a4.5 4.5 0 016.364 6.364L12 20.364l-7.682-7.682a4.5 4.5 0 010-6.364z" /></svg>
+                    <span id="wishlist-count" class="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full transform translate-x-1/2 -translate-y-1/2">0</span>
+                </button>
+                <button id="cart-btn" class="relative p-2 text-gray-600 hover:text-indigo-600 focus:outline-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                    <span id="cart-count" class="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full transform translate-x-1/2 -translate-y-1/2">0</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="w-full">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
+                <!-- Search Bar -->
+                <div class="relative w-full md:w-1/2">
+                    <input type="text" id="search-bar" placeholder="Search for a phone model..." class="w-full py-2 pl-10 pr-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                    <svg class="w-5 h-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                </div>
+                <!-- Filter and Sort Buttons -->
+                <div class="flex items-center gap-4">
+                    <button id="toggle-filters-btn" class="flex items-center gap-2 bg-white border border-gray-300 text-gray-700 py-2 px-4 rounded-lg shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2a1 1 0 01-.293.707L12 14.414V19a1 1 0 01-1.447.894l-4-2A1 1 0 016 17v-2.586L3.293 6.707A1 1 0 013 6V4z"></path></svg>
+                        <span>Filters</span>
+                    </button>
+                    <select id="sort-by" class="w-full md:w-auto bg-white border border-gray-300 text-gray-700 py-2 px-4 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        <option value="default">Sort by</option>
+                        <option value="rating-desc">Rating: High to Low</option>
+                        <option value="rating-asc">Rating: Low to High</option>
+                        <option value="price-desc">Price: High to Low</option>
+                        <option value="price-asc">Price: Low to High</option>
+                    </select>
+                </div>
+            </div>
+            <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
+            <div id="loader" class="loader hidden"></div>
+            <div id="no-products" class="hidden text-center py-16">
+                <p class="text-2xl font-semibold text-gray-700">No Products Found</p>
+                <p class="text-gray-500 mt-2">Try adjusting your search or filter criteria.</p>
+            </div>
+
+            <!-- Recently Viewed Section -->
+            <div id="recently-viewed-section" class="mt-16 hidden">
+                <h2 class="text-3xl font-bold text-gray-800 mb-6">You Recently Viewed</h2>
+                <div id="recently-viewed-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <div id="product-detail-modal" class="modal-overlay fixed inset-0 bg-black bg-opacity-70 z-50 flex items-center justify-center p-4 hidden opacity-0">
+        <div id="product-detail-container" class="modal-container bg-white w-full max-w-md rounded-lg shadow-xl transform scale-95 opacity-0"></div>
+    </div>
+
+    <div id="wishlist-modal" class="modal-overlay fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4 hidden opacity-0">
+        <div class="modal-container bg-white w-full max-w-2xl rounded-lg shadow-xl transform scale-95">
+            <div class="flex justify-between items-center p-4 border-b">
+                <h2 class="text-2xl font-semibold">My Wishlist</h2>
+                <button class="close-modal-btn p-2 rounded-full hover:bg-gray-200">&times;</button>
+            </div>
+            <div id="wishlist-items" class="p-4 max-h-[60vh] overflow-y-auto"></div>
+        </div>
+    </div>
+
+    <div id="cart-modal" class="modal-overlay fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4 hidden opacity-0">
+        <div class="modal-container bg-white w-full max-w-2xl rounded-lg shadow-xl transform scale-95">
+            <div class="flex justify-between items-center p-4 border-b">
+                <h2 class="text-2xl font-semibold">My Cart</h2>
+                <button class="close-modal-btn p-2 rounded-full hover:bg-gray-200">&times;</button>
+            </div>
+            <div id="cart-items" class="p-4 max-h-[60vh] overflow-y-auto"></div>
+            <div id="cart-footer" class="p-4 border-t"></div>
+        </div>
+    </div>
+    
+    <!-- Compare Modal -->
+    <div id="compare-modal" class="modal-overlay fixed inset-0 bg-black bg-opacity-70 z-50 flex items-center justify-center p-4 hidden opacity-0">
+        <div class="modal-container bg-white w-full max-w-6xl rounded-lg shadow-xl transform scale-95 opacity-0">
+            <div class="flex justify-between items-center p-4 border-b">
+                <h2 class="text-2xl font-semibold">Compare Products</h2>
+                <button class="close-modal-btn p-2 rounded-full hover:bg-gray-200">&times;</button>
+            </div>
+            <div id="compare-items-container" class="p-4 overflow-x-auto"></div>
+        </div>
+    </div>
+
+    <!-- Floating Compare Button -->
+    <div id="compare-button-container" class="fixed bottom-5 right-5 z-40 hidden">
+        <button id="compare-btn" class="bg-indigo-600 text-white font-bold py-3 px-6 rounded-full shadow-lg hover:bg-indigo-700 transition-transform transform hover:scale-105">
+            Compare (<span id="compare-count">0</span>)
+        </button>
+    </div>
+
+    <script src="script.js" defer></script>
+</body>
+</html>
