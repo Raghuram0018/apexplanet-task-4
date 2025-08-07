@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RaghuRam Kammampally - Portfolio</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Custom styles for animations and tooltips */
+    @keyframes neon-glow-pulse {
+        0%, 100% {
+            text-shadow: 0 0 5px #06b6d4, 0 0 10px #06b6d4, 0 0 20px #06b6d4, 0 0 40px #06b6d4, 0 0 80px #06b6d4, 0 0 90px #06b6d4;
+        }
+        50% {
+            text-shadow: none;
+        }
+    }
+    .neon-text {
+        animation: neon-glow-pulse 2s ease-in-out infinite;
+    }
+    @keyframes fade-in-up {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    .animate-fade-in-up {
+        animation: fade-in-up 1s ease-out forwards;
+    }
+    .project-card {
+        transform-style: preserve-3d;
+        transform: rotateX(0) rotateY(0) scale(1);
+        transition: transform 0.5s ease;
+    }
+    .project-card:hover {
+        transform: rotateY(5deg) rotateX(5deg) scale(1.05);
+        box-shadow: 0 20px 40px rgba(244, 114, 182, 0.4);
+    }
+    .skill-tooltip {
+        visibility: hidden;
+        opacity: 0;
+        transition: opacity 0.3s, visibility 0s;
+    }
+    .group:hover .skill-tooltip {
+        visibility: visible;
+        opacity: 1;
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body class="bg-gray-950 text-gray-200 font-sans min-h-screen relative overflow-x-hidden">
+
+  <!-- Sticky Header -->
+  <header class="sticky top-0 z-50 bg-gray-950 bg-opacity-80 backdrop-filter backdrop-blur-lg shadow-lg shadow-fuchsia-950">
+    <nav class="container mx-auto px-4 py-4 flex justify-between items-center border-b border-fuchsia-900">
+      <a href="#hero" class="text-xl font-bold text-fuchsia-400 hover:text-fuchsia-300 transition-colors duration-300">
+        RaghuRam Kammampally
+      </a>
+      <div class="flex items-center space-x-6">
+        <a href="#about" class="text-gray-300 hover:text-cyan-400 transition-colors duration-300">About</a>
+        <a href="#experience" class="text-gray-300 hover:text-cyan-400 transition-colors duration-300">Experience</a>
+        <a href="#projects" class="text-gray-300 hover:text-cyan-400 transition-colors duration-300">Projects</a>
+        <a href="#certifications" class="text-gray-300 hover:text-cyan-400 transition-colors duration-300">Certifications</a>
+        <a href="#contact" class="text-gray-300 hover:text-cyan-400 transition-colors duration-300">Contact</a>
+        <button id="theme-toggle" class="p-2 rounded-full hover:bg-fuchsia-900 transition-colors duration-300">
+          <!-- Sun Icon -->
+          <svg id="sun-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sun text-fuchsia-400"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+          <!-- Moon Icon (initially hidden) -->
+          <svg id="moon-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-moon text-fuchsia-400 hidden"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container mx-auto p-4 md:p-8">
+    <!-- Hero Section -->
+    <section id="hero" class="min-h-screen flex items-center justify-center text-center px-4">
+      <div class="max-w-4xl space-y-8">
+        <h1 class="text-5xl sm:text-6xl md:text-8xl font-extrabold tracking-tight leading-none text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-500 to-cyan-500 neon-text animate-fade-in-up">
+          RaghuRam Kammampally
+        </h1>
+        <p class="text-xl sm:text-2xl md:text-3xl font-medium text-gray-400 animate-fade-in-up delay-200">
+          Full-Stack Developer & Designer
+        </p>
+        <a href="#projects" class="inline-block px-8 py-3 text-lg font-bold text-gray-900 bg-gradient-to-r from-fuchsia-500 to-cyan-500 rounded-full shadow-lg shadow-fuchsia-500/50 hover:shadow-cyan-500/50 transition-all duration-500 transform hover:scale-105 animate-fade-in-up delay-400">
+          Explore My Work
+        </a>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 md:py-32">
+      <h2 class="text-4xl font-bold text-center mb-16 text-fuchsia-400">About Me</h2>
+      <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-center space-y-12 md:space-y-0 md:space-x-16">
+        <div class="w-56 h-56 md:w-80 md:h-80 flex-shrink-0 rounded-full overflow-hidden p-1 bg-gradient-to-br from-fuchsia-500 to-cyan-500 shadow-xl shadow-fuchsia-500/20 transition-transform duration-500 hover:scale-105">
+          <img src="https://placehold.co/320x320/0a0a0a/e5e7eb?text=RK" alt="Profile" class="w-full h-full object-cover rounded-full" />
+        </div>
+        <div class="text-center md:text-left space-y-6">
+          <p class="text-lg leading-relaxed text-gray-300">
+            I'm a passionate and creative full-stack developer with a focus on building exceptional digital experiences. With a strong foundation in both front-end and back-end technologies, I enjoy bringing ideas to life from concept to deployment. My expertise lies in crafting clean, efficient, and user-friendly applications.
+          </p>
+          <div class="mt-8">
+            <h3 class="text-xl font-semibold mb-6 text-cyan-400">My Skills</h3>
+            <div class="flex flex-wrap justify-center md:justify-start gap-6">
+              <!-- HTML Skill -->
+              <div class="group relative flex flex-col items-center p-4 rounded-xl bg-gray-900 ring-2 ring-transparent transition-all duration-300 hover:ring-fuchsia-500 hover:shadow-lg hover:shadow-fuchsia-500/20">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg" alt="HTML5" class="h-10 w-10 mb-2 filter grayscale group-hover:grayscale-0 transition-all duration-300" />
+                <span class="text-sm font-medium text-gray-400 group-hover:text-fuchsia-400 transition-colors duration-300">HTML5</span>
+                <div class="skill-tooltip absolute bottom-full mb-2 p-2 rounded-md bg-gray-700 text-gray-200 text-xs w-48 text-center">
+                  The foundational language for all web pages.
+                </div>
+              </div>
+              <!-- CSS Skill -->
+              <div class="group relative flex flex-col items-center p-4 rounded-xl bg-gray-900 ring-2 ring-transparent transition-all duration-300 hover:ring-fuchsia-500 hover:shadow-lg hover:shadow-fuchsia-500/20">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg" alt="CSS3" class="h-10 w-10 mb-2 filter grayscale group-hover:grayscale-0 transition-all duration-300" />
+                <span class="text-sm font-medium text-gray-400 group-hover:text-fuchsia-400 transition-colors duration-300">CSS3</span>
+                <div class="skill-tooltip absolute bottom-full mb-2 p-2 rounded-md bg-gray-700 text-gray-200 text-xs w-48 text-center">
+                  Used for styling and creating layouts for web pages.
+                </div>
+              </div>
+              <!-- JavaScript Skill -->
+              <div class="group relative flex flex-col items-center p-4 rounded-xl bg-gray-900 ring-2 ring-transparent transition-all duration-300 hover:ring-fuchsia-500 hover:shadow-lg hover:shadow-fuchsia-500/20">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" alt="JavaScript" class="h-10 w-10 mb-2 filter grayscale group-hover:grayscale-0 transition-all duration-300" />
+                <span class="text-sm font-medium text-gray-400 group-hover:text-fuchsia-400 transition-colors duration-300">JavaScript</span>
+                <div class="skill-tooltip absolute bottom-full mb-2 p-2 rounded-md bg-gray-700 text-gray-200 text-xs w-48 text-center">
+                  The programming language for dynamic web content.
+                </div>
+              </div>
+              <!-- Java Skill -->
+              <div class="group relative flex flex-col items-center p-4 rounded-xl bg-gray-900 ring-2 ring-transparent transition-all duration-300 hover:ring-fuchsia-500 hover:shadow-lg hover:shadow-fuchsia-500/20">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg" alt="Java" class="h-10 w-10 mb-2 filter grayscale group-hover:grayscale-0 transition-all duration-300" />
+                <span class="text-sm font-medium text-gray-400 group-hover:text-fuchsia-400 transition-colors duration-300">Java</span>
+                <div class="skill-tooltip absolute bottom-full mb-2 p-2 rounded-md bg-gray-700 text-gray-200 text-xs w-48 text-center">
+                  A versatile, object-oriented language for enterprise applications, mobile, and web development.
+                </div>
+              </div>
+              <!-- C Skill -->
+              <div class="group relative flex flex-col items-center p-4 rounded-xl bg-gray-900 ring-2 ring-transparent transition-all duration-300 hover:ring-fuchsia-500 hover:shadow-lg hover:shadow-fuchsia-500/20">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/c/c-original.svg" alt="C" class="h-10 w-10 mb-2 filter grayscale group-hover:grayscale-0 transition-all duration-300" />
+                <span class="text-sm font-medium text-gray-400 group-hover:text-fuchsia-400 transition-colors duration-300">C</span>
+                <div class="skill-tooltip absolute bottom-full mb-2 p-2 rounded-md bg-gray-700 text-gray-200 text-xs w-48 text-center">
+                  A powerful, general-purpose language widely used for system programming and embedded systems.
+                </div>
+              </div>
+              <div class="group relative flex flex-col items-center p-4 rounded-xl bg-gray-900 ring-2 ring-transparent transition-all duration-300 hover:ring-fuchsia-500 hover:shadow-lg hover:shadow-fuchsia-500/20">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" alt="React" class="h-10 w-10 mb-2 filter grayscale group-hover:grayscale-0 transition-all duration-300" />
+                <span class="text-sm font-medium text-gray-400 group-hover:text-fuchsia-400 transition-colors duration-300">React</span>
+                <div class="skill-tooltip absolute bottom-full mb-2 p-2 rounded-md bg-gray-700 text-gray-200 text-xs w-48 text-center">
+                  A JavaScript library for building user interfaces.
+                </div>
+              </div>
+              <div class="group relative flex flex-col items-center p-4 rounded-xl bg-gray-900 ring-2 ring-transparent transition-all duration-300 hover:ring-fuchsia-500 hover:shadow-lg hover:shadow-fuchsia-500/20">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg" alt="Node.js" class="h-10 w-10 mb-2 filter grayscale group-hover:grayscale-0 transition-all duration-300" />
+                <span class="text-sm font-medium text-gray-400 group-hover:text-fuchsia-400 transition-colors duration-300">Node.js</span>
+                <div class="skill-tooltip absolute bottom-full mb-2 p-2 rounded-md bg-gray-700 text-gray-200 text-xs w-48 text-center">
+                  A JavaScript runtime for building server-side applications.
+                </div>
+              </div>
+              <div class="group relative flex flex-col items-center p-4 rounded-xl bg-gray-900 ring-2 ring-transparent transition-all duration-300 hover:ring-fuchsia-500 hover:shadow-lg hover:shadow-fuchsia-500/20">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg" alt="Tailwind CSS" class="h-10 w-10 mb-2 filter grayscale group-hover:grayscale-0 transition-all duration-300" />
+                <span class="text-sm font-medium text-gray-400 group-hover:text-fuchsia-400 transition-colors duration-300">Tailwind CSS</span>
+                <div class="skill-tooltip absolute bottom-full mb-2 p-2 rounded-md bg-gray-700 text-gray-200 text-xs w-48 text-center">
+                  A utility-first CSS framework for rapid UI development.
+                </div>
+              </div>
+              <div class="group relative flex flex-col items-center p-4 rounded-xl bg-gray-900 ring-2 ring-transparent transition-all duration-300 hover:ring-fuchsia-500 hover:shadow-lg hover:shadow-fuchsia-500/20">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" alt="Python" class="h-10 w-10 mb-2 filter grayscale group-hover:grayscale-0 transition-all duration-300" />
+                <span class="text-sm font-medium text-gray-400 group-hover:text-fuchsia-400 transition-colors duration-300">Python</span>
+                <div class="skill-tooltip absolute bottom-full mb-2 p-2 rounded-md bg-gray-700 text-gray-200 text-xs w-48 text-center">
+                  A versatile language used for backend, data science, and more.
+                </div>
+              </div>
+              <div class="group relative flex flex-col items-center p-4 rounded-xl bg-gray-900 ring-2 ring-transparent transition-all duration-300 hover:ring-fuchsia-500 hover:shadow-lg hover:shadow-fuchsia-500/20">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/firebase/firebase-plain-wordmark.svg" alt="Firebase" class="h-10 w-10 mb-2 filter grayscale group-hover:grayscale-0 transition-all duration-300" />
+                <span class="text-sm font-medium text-gray-400 group-hover:text-fuchsia-400 transition-colors duration-300">Firebase</span>
+                <div class="skill-tooltip absolute bottom-full mb-2 p-2 rounded-md bg-gray-700 text-gray-200 text-xs w-48 text-center">
+                  A platform for building web and mobile applications.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Experience Section 
+    <section id="experience" class="py-20 md:py-32">
+      <h2 class="text-4xl font-bold text-center mb-16 text-fuchsia-400">Experience</h2>
+      <div class="max-w-4xl mx-auto space-y-12">
+        <div class="relative pl-8 sm:pl-32 group">
+          <div class="absolute left-0 top-0 h-full w-0.5 bg-fuchsia-900 group-hover:bg-cyan-500 transition-colors duration-300"></div>
+          <div class="absolute left-[-6px] top-4 h-3 w-3 rounded-full bg-fuchsia-400 group-hover:bg-cyan-400 transition-colors duration-300"></div>
+          <div class="p-6 rounded-lg bg-gray-900 shadow-xl shadow-fuchsia-950 transform transition-transform duration-500 hover:scale-105">
+            <h3 class="text-2xl font-bold text-fuchsia-400">Front-End Software Engineer</h3>
+            <h4 class="text-lg font-medium text-cyan-400">Skyscanner.</h4>
+            <p class="text-sm font-light text-gray-500 mb-4">June 2025 - July 2025</p>
+            <p class="text-gray-300">
+              Completed a job simulation where I built a web application using React as a front-end engineer at Skyscanner.
+             Developed a page for picking a travel date using Skyscanner’s open-source Backpack React library.
+             Customised my application and ran automated tests to ensure it rendered properly.
+            </p>
+          </div>
+        </div>
+        <div class="relative pl-8 sm:pl-32 group">
+          <div class="absolute left-0 top-0 h-full w-0.5 bg-fuchsia-900 group-hover:bg-cyan-500 transition-colors duration-300"></div>
+          <div class="absolute left-[-6px] top-4 h-3 w-3 rounded-full bg-fuchsia-400 group-hover:bg-cyan-400 transition-colors duration-300"></div>
+          <div class="p-6 rounded-lg bg-gray-900 shadow-xl shadow-fuchsia-950 transform transition-transform duration-500 hover:scale-105">
+            <h3 class="text-2xl font-bold text-fuchsia-400">Software Developer</h3>
+            <h4 class="text-lg font-medium text-cyan-400">Innovate Co.</h4>
+            <p class="text-sm font-light text-gray-500 mb-4">Jul 2018 - Dec 2021</p>
+            <p class="text-gray-300">
+              Developed and maintained full-stack applications using React, Node.js, and MongoDB. Contributed to a significant codebase migration and introduced automated testing.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  -->
+                   
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 md:py-32">
+      <h2 class="text-4xl font-bold text-center mb-16 text-fuchsia-400">My Projects</h2>
+      <!-- Project Filtering -->
+      <div class="flex justify-center flex-wrap gap-4 mb-12">
+        <button data-category="All" class="project-filter-btn px-6 py-2 rounded-full font-semibold transition-all duration-300 bg-gradient-to-r from-fuchsia-500 to-cyan-500 text-gray-950 shadow-md shadow-fuchsia-500/50">
+          All
+        </button>
+        <button data-category="Front-End" class="project-filter-btn px-6 py-2 rounded-full font-semibold transition-all duration-300 bg-gray-800 text-gray-300 hover:bg-fuchsia-900 hover:text-cyan-400 border border-transparent hover:border-fuchsia-400">
+          Front-End
+        </button>
+        <button data-category="Full-Stack" class="project-filter-btn px-6 py-2 rounded-full font-semibold transition-all duration-300 bg-gray-800 text-gray-300 hover:bg-fuchsia-900 hover:text-cyan-400 border border-transparent hover:border-fuchsia-400">
+          Full-Stack
+        </button>
+        <button data-category="Back-End" class="project-filter-btn px-6 py-2 rounded-full font-semibold transition-all duration-300 bg-gray-800 text-gray-300 hover:bg-fuchsia-900 hover:text-cyan-400 border border-transparent hover:border-fuchsia-400">
+          Back-End
+        </button>
+      </div>
+      <div id="project-container" class="grid gap-12 md:grid-cols-2 lg:grid-cols-3">
+        <!-- Project 1 -->
+        <div class="project-card group relative bg-gray-900 rounded-2xl overflow-hidden shadow-2xl shadow-gray-900/50 transform-gpu transition-all duration-500 hover:scale-105" data-category="Front-End">
+          <div class="absolute inset-0 bg-gradient-to-br from-fuchsia-500/10 to-cyan-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+          <img src="https://placehold.co/600x400/1e293b/d1d5db?text=Project+1" alt="Interactive Game App" class="w-full h-56 object-cover rounded-t-2xl transform transition-transform duration-500 group-hover:scale-110" />
+          <div class="p-6 relative z-10">
+            <h3 class="text-2xl font-bold mb-2 text-fuchsia-400">Quizy  Game .</h3>
+            <p class="text-gray-400 mb-4 text-sm">A fun and engaging web-based game built with JavaScript and HTML5 and Css. Features include score tracking, various levels,Avatars,Sound,Dark&Light them toggle and responsive design for mobile play.</p>
+            <div class="flex space-x-4 mt-6">
+              <a href="https://raghuram0018.github.io/apexplanet-task-3-quiz-image-carousel-weather-api-/" target="_blank" rel="noopener noreferrer" class="px-5 py-2 text-sm font-bold text-gray-900 bg-gradient-to-r from-fuchsia-500 to-cyan-500 rounded-full shadow-md shadow-fuchsia-500/30 hover:shadow-cyan-500/30 transition-all duration-300">Live Demo</a>
+              <a href="https://github.com/Raghuram0018/apexplanet-task-3-quiz-image-carousel-weather-api-" target="_blank" rel="noopener noreferrer" class="px-5 py-2 text-sm font-bold text-fuchsia-400 border border-fuchsia-400 rounded-full hover:bg-fuchsia-400 hover:text-gray-900 transition-colors duration-300">GitHub</a>
+            </div>
+          </div>
+        </div>
+        <!-- Project 2 -->
+        <div class="project-card group relative bg-gray-900 rounded-2xl overflow-hidden shadow-2xl shadow-gray-900/50 transform-gpu transition-all duration-500 hover:scale-105" data-category="Front-End">
+          <div class="absolute inset-0 bg-gradient-to-br from-fuchsia-500/10 to-cyan-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+          <img src="https://placehold.co/600x400/1e293b/d1d5db?text=Project+2" alt="Task Management Tool" class="w-full h-56 object-cover rounded-t-2xl transform transition-transform duration-500 group-hover:scale-110" />
+          <div class="p-6 relative z-10">
+            <h3 class="text-2xl font-bold mb-2 text-fuchsia-400">Modern Image Carousel.</h3>
+            <p class="text-gray-400 mb-4 text-sm">A Modern Image carousel built using Html,Css and jvascript automatically scrolls through featured project with smooth transitionsand provides an eye-catching viewing experience.</p>
+            <div class="flex space-x-4 mt-6">
+              <a href="https://raghuram0018.github.io/modern-image-carousel/" target="_blank" rel="noopener noreferrer" class="px-5 py-2 text-sm font-bold text-gray-900 bg-gradient-to-r from-fuchsia-500 to-cyan-500 rounded-full shadow-md shadow-fuchsia-500/30 hover:shadow-cyan-500/30 transition-all duration-300">Live Demo</a>
+              <a href="https://github.com/Raghuram0018/modern-image-carousel" target="_blank" rel="noopener noreferrer" class="px-5 py-2 text-sm font-bold text-fuchsia-400 border border-fuchsia-400 rounded-full hover:bg-fuchsia-400 hover:text-gray-900 transition-colors duration-300">GitHub</a>
+            </div>
+          </div>
+        </div>
+        <!-- Project 3 -->
+        <div class="project-card group relative bg-gray-900 rounded-2xl overflow-hidden shadow-2xl shadow-gray-900/50 transform-gpu transition-all duration-500 hover:scale-105" data-category="Front-End">
+          <div class="absolute inset-0 bg-gradient-to-br from-fuchsia-500/10 to-cyan-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+          <img src="https://placehold.co/600x400/1e293b/d1d5db?text=Project+3" alt="Task Management Tool" class="w-full h-56 object-cover rounded-t-2xl transform transition-transform duration-500 group-hover:scale-110" />
+          <div class="p-6 relative z-10">
+            <h3 class="text-2xl font-bold mb-2 text-fuchsia-400"> productlisting-filter-sort.</h3>
+            <p class="text-gray-400 mb-4 text-sm">A simple and intuitive product listing page with filter and sort functionality and compare,wishlist,cart features.Built with HTML,Tailwindcss and JavaScript. It allows users to view, filter, and sort products easily.</p>
+            <div class="flex space-x-4 mt-6">
+              <a href="https://raghuram0018.github.io/productlisting-filter-sort/" target="_blank" rel="noopener noreferrer" class="px-5 py-2 text-sm font-bold text-gray-900 bg-gradient-to-r from-fuchsia-500 to-cyan-500 rounded-full shadow-md shadow-fuchsia-500/30 hover:shadow-cyan-500/30 transition-all duration-300">Live Demo</a>
+              <a href="https://github.com/Raghuram0018/productlisting-filter-sort" target="_blank" rel="noopener noreferrer" class="px-5 py-2 text-sm font-bold text-fuchsia-400 border border-fuchsia-400 rounded-full hover:bg-fuchsia-400 hover:text-gray-900 transition-colors duration-300">GitHub</a>
+            </div>
+          </div>
+        </div>
+        <!-- Project 4 -->
+        <div class="project-card group relative bg-gray-900 rounded-2xl overflow-hidden shadow-2xl shadow-gray-900/50 transform-gpu transition-all duration-500 hover:scale-105" data-category="Front-End">
+          <div class="absolute inset-0 bg-gradient-to-br from-fuchsia-500/10 to-cyan-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+          <img src="https://placehold.co/600x400/1e293b/d1d5db?text=Project+4" alt="Task Management Tool" class="w-full h-56 object-cover rounded-t-2xl transform transition-transform duration-500 group-hover:scale-110" />
+          <div class="p-6 relative z-10">
+            <h3 class="text-2xl font-bold mb-2 text-fuchsia-400"> TO-DO-LIST.</h3>
+            <p class="text-gray-400 mb-4 text-sm">A simple and intuitive To-Do List application built with HTML, CSS, and JavaScript. It allows users to create, edit,track history using local storage,Undo&Redo functionality and delete tasks with ease and also can import and export Jsons files.</p>
+            <div class="flex space-x-4 mt-6">
+              <a href="https://raghuram0018.github.io/to-do-list-/" target="_blank" rel="noopener noreferrer" class="px-5 py-2 text-sm font-bold text-gray-900 bg-gradient-to-r from-fuchsia-500 to-cyan-500 rounded-full shadow-md shadow-fuchsia-500/30 hover:shadow-cyan-500/30 transition-all duration-300">Live Demo</a>
+              <a href="https://github.com/Raghuram0018/to-do-list-" target="_blank" rel="noopener noreferrer" class="px-5 py-2 text-sm font-bold text-fuchsia-400 border border-fuchsia-400 rounded-full hover:bg-fuchsia-400 hover:text-gray-900 transition-colors duration-300">GitHub</a>
+            </div>
+          </div>
+        </div>
+         <!-- Project 5 -->
+        <div class="project-card group relative bg-gray-900 rounded-2xl overflow-hidden shadow-2xl shadow-gray-900/50 transform-gpu transition-all duration-500 hover:scale-105" data-category="Front-End">
+          <div class="absolute inset-0 bg-gradient-to-br from-fuchsia-500/10 to-cyan-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+          <img src="https://placehold.co/600x400/1e293b/d1d5db?text=Project+5" alt="Task Management Tool" class="w-full h-56 object-cover rounded-t-2xl transform transition-transform duration-500 group-hover:scale-110" />
+          <div class="p-6 relative z-10">
+            <h3 class="text-2xl font-bold mb-2 text-fuchsia-400"> Blog Website.</h3>
+            <p class="text-gray-400 mb-4 text-sm">A simple and intuitive Blog website built with HTML, CSS, and JavaScript. It allows users to create, edit, and delete blog posts with ease and also can import and export Jsons files.</p>
+            <div class="flex space-x-4 mt-6">
+              <a href="#" target="_blank" rel="noopener noreferrer" class="px-5 py-2 text-sm font-bold text-gray-900 bg-gradient-to-r from-fuchsia-500 to-cyan-500 rounded-full shadow-md shadow-fuchsia-500/30 hover:shadow-cyan-500/30 transition-all duration-300">Live Demo</a>
+              <a href="#" target="_blank" rel="noopener noreferrer" class="px-5 py-2 text-sm font-bold text-fuchsia-400 border border-fuchsia-400 rounded-full hover:bg-fuchsia-400 hover:text-gray-900 transition-colors duration-300">GitHub</a>
+            </div>
+          </div>
+        </div>
+        <!-- Project 6 -->
+        <div class="project-card group relative bg-gray-900 rounded-2xl overflow-hidden shadow-2xl shadow-gray-900/50 transform-gpu transition-all duration-500 hover:scale-105" data-category="Front-End">
+          <div class="absolute inset-0 bg-gradient-to-br from-fuchsia-500/10 to-cyan-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+          <img src="https://placehold.co/600x400/1e293b/d1d5db?text=Project+6" alt="E-commerce Website" class="w-full h-56 object-cover rounded-t-2xl transform transition-transform duration-500 group-hover:scale-110" />
+          <div class="p-6 relative z-10">
+            <h3 class="text-2xl font-bold mb-2 text-fuchsia-400">Portfolio Website.</h3>
+            <p class="text-gray-400 mb-4 text-sm">A modern portfolio website showcasing my projects and skills and only dark themed display with eye-catching design. Built with JavaScript and Tailwind CSS, it features smooth animations and a responsive layout.</p>
+            <div class="flex space-x-4 mt-6">
+              <a href="#" target="_blank" rel="noopener noreferrer" class="px-5 py-2 text-sm font-bold text-gray-900 bg-gradient-to-r from-fuchsia-500 to-cyan-500 rounded-full shadow-md shadow-fuchsia-500/30 hover:shadow-cyan-500/30 transition-all duration-300">Live Demo</a>
+              <a href="https://github.com/Raghuram0018/portfolio-website" target="_blank" rel="noopener noreferrer" class="px-5 py-2 text-sm font-bold text-fuchsia-400 border border-fuchsia-400 rounded-full hover:bg-fuchsia-400 hover:text-gray-900 transition-colors duration-300">GitHub</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Certifications Section -->
+    <section id="certifications" class="py-20 md:py-32">
+        <h2 class="text-4xl font-bold text-center mb-16 text-fuchsia-400">Certifications</h2>
+        <div id="certifications-container" class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            <!-- Certifications will be dynamically inserted here by JavaScript -->
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 md:py-32">
+      <h2 class="text-4xl font-bold text-center mb-16 text-fuchsia-400">Get in Touch</h2>
+      <div class="max-w-2xl mx-auto text-center space-y-8">
+        <p class="text-xl leading-relaxed text-gray-300">
+          I'm currently open to new opportunities and collaborations. Let's build something amazing together!
+        </p>
+        <!-- Contact Form -->
+        <form id="contact-form" class="space-y-6 text-left">
+          <div>
+            <label for="name" class="block text-sm font-medium text-gray-400 mb-1">Name</label>
+            <input type="text" id="name" name="name" required class="w-full p-3 rounded-lg bg-gray-800 text-gray-100 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-colors duration-300" />
+          </div>
+          <div>
+            <label for="email" class="block text-sm font-medium text-gray-400 mb-1">Email</label>
+            <input type="email" id="email" name="email" required class="w-full p-3 rounded-lg bg-gray-800 text-gray-100 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-colors duration-300" />
+          </div>
+          <div>
+            <label for="message" class="block text-sm font-medium text-gray-400 mb-1">Message</label>
+            <textarea id="message" name="message" rows="4" required class="w-full p-3 rounded-lg bg-gray-800 text-gray-100 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-colors duration-300"></textarea>
+          </div>
+          <button type="submit" class="w-full px-8 py-3 text-lg font-bold text-gray-900 bg-gradient-to-r from-cyan-500 to-fuchsia-500 rounded-full shadow-lg shadow-cyan-500/50 hover:shadow-fuchsia-500/50 transition-all duration-500 transform hover:scale-105">
+            Send Message
+          </button>
+        </form>
+        <div id="contact-success-message" class="hidden mt-4 p-4 rounded-lg bg-green-500 text-gray-950 text-center font-bold animate-fade-in-up">
+          Thank you for your message! I will get back to you soon.
+        </div>
+        <div class="flex justify-center space-x-8 mt-8 pt-8 border-t border-fuchsia-900">
+          <a href="mailto:hello@example.com" class="text-fuchsia-400 hover:text-fuchsia-300 transition-colors duration-300 transform hover:scale-110">
+            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+          </a>
+          <!-- Link updated with placeholder LinkedIn URL -->
+          <a href="https://www.linkedin.com/in/raghuram-kammampally-a99385378" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:text-cyan-300 transition-colors duration-300 transform hover:scale-110">
+            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-linkedin"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+          <!-- Link updated with placeholder GitHub URL -->
+          <a href="https://github.com/Raghuram0018" target="_blank" rel="noopener noreferrer" class="text-gray-300 hover:text-gray-200 transition-colors duration-300 transform hover:scale-110">
+            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3.5 0 4.7-2.6 4.7-5.5a4.72 4.72 0 0 0-1.2-3.8c.4-1.1.4-2.5-.2-3.8-.5-.1-1.3.1-2.3.6C12.9 3.5 11.5 3.1 10 3.1c-1.5 0-2.9.4-3.7 1.3-.8.6-1.5 1.5-2.3.6-.6 1.3-.6 2.7-.2 3.8A4.72 4.72 0 0 0 5 11.5c0 2.9 1.2 5.5 4.7 5.5a4.8 4.8 0 0 0-1 3.5v4"/><path d="M10 3v1"/></svg>
+          </a>
+        </div>
+        <a href="https://placehold.co/600x400/1e293b/d1d5db?text=Download+Resume" target="_blank" rel="noopener noreferrer" class="inline-block px-8 py-3 text-lg font-bold text-gray-900 bg-gradient-to-r from-fuchsia-500 to-cyan-500 rounded-full shadow-lg shadow-fuchsia-500/50 hover:shadow-cyan-500/50 transition-all duration-500">
+          Download Resume
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-center p-6 border-t border-fuchsia-900">
+    <p class="text-sm text-gray-500">&copy; 2025 RaghuRam Kammampally. All rights reserved.</p>
+  </footer>
+
+  <!-- Scroll to top button -->
+  <button id="scroll-to-top" class="fixed bottom-6 right-6 p-3 rounded-full bg-fuchsia-500 text-gray-950 shadow-lg shadow-fuchsia-500/50 transition-transform duration-300 hover:scale-110 animate-pulse hidden">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up-circle"><circle cx="12" cy="12" r="10"/><path d="m16 12-4-4-4 4"/><path d="M12 16V8"/></svg>
+  </button>
+
+  <!-- Custom JavaScript -->
+  <!-- Note: The content for this script is provided in a separate immersive block. -->
+  <script src="script.js"></script>
+
+</body>
+</html>
